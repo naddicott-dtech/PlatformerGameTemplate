@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scenes/levels/Level.gd" id="1_ah2oq"]
+[ext_resource type="PackedScene" path="res://scenes/entities/Platform.tscn" id="2_suxxx"]
+[ext_resource type="PackedScene" path="res://scenes/entities/Player.tscn" id="3_oovja"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/player.svg" id="4_vplt4"]
+[ext_resource type="PackedScene" path="res://scenes/entities/Zone.tscn" id="5_tbswa"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/checkpoint.svg" id="6_5m5r8"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/exit.svg" id="7_bnnvc"]
+
+[node name="Solo" type="Node2D"]
+script = ExtResource("1_ah2oq")
+mission = "YOUR MISSION: Jump the gaps and hazard. Touch checkpoints, reach the exit. Tune the jumps and build a better level."
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Floor1" parent="Platforms" instance=ExtResource("2_suxxx")]
+position = Vector2(170, 620)
+size = Vector2(340, 32)
+display_name = "floor1"
+
+[node name="Floor2" parent="Platforms" instance=ExtResource("2_suxxx")]
+position = Vector2(610, 620)
+size = Vector2(380, 32)
+display_name = "floor2"
+
+[node name="Floor3" parent="Platforms" instance=ExtResource("2_suxxx")]
+position = Vector2(1090, 620)
+size = Vector2(340, 32)
+display_name = "floor3"
+
+[node name="Step" parent="Platforms" instance=ExtResource("2_suxxx")]
+position = Vector2(735, 540)
+size = Vector2(130, 24)
+display_name = "step"
+
+[node name="LeftWall" parent="Platforms" instance=ExtResource("2_suxxx")]
+position = Vector2(8, 440)
+size = Vector2(16, 360)
+display_name = "leftwall"
+
+[node name="RightWall" parent="Platforms" instance=ExtResource("2_suxxx")]
+position = Vector2(1272, 440)
+size = Vector2(16, 360)
+display_name = "rightwall"
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("3_oovja")]
+position = Vector2(80, 560)
+picture = ExtResource("4_vplt4")
+
+[node name="Checkpoint" parent="Entities" instance=ExtResource("5_tbswa")]
+position = Vector2(465, 560)
+kind = 1
+display_name = "checkpoint"
+size = Vector2(40, 90)
+picture = ExtResource("6_5m5r8")
+message = "Saved this spot for this run."
+
+[node name="Hazard" parent="Entities" instance=ExtResource("5_tbswa")]
+position = Vector2(565, 590)
+size = Vector2(65, 28)
+message = ""
+
+[node name="Checkpoint2" parent="Entities" instance=ExtResource("5_tbswa")]
+position = Vector2(980, 560)
+kind = 1
+display_name = "checkpoint2"
+size = Vector2(40, 90)
+picture = ExtResource("6_5m5r8")
+message = "Last checkpoint!"
+
+[node name="Exit" parent="Entities" instance=ExtResource("5_tbswa")]
+position = Vector2(1160, 560)
+kind = 2
+display_name = "exit"
+size = Vector2(100, 90)
+picture = ExtResource("7_bnnvc")
+message = "You made it! Retune a jump, move a hazard, try again."

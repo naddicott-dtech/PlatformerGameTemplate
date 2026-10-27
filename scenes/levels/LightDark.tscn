@@ -1,0 +1,118 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scenes/levels/Level.gd" id="1_sdfdm"]
+[ext_resource type="PackedScene" path="res://scenes/entities/Platform.tscn" id="2_yoxu5"]
+[ext_resource type="PackedScene" path="res://scenes/entities/Player.tscn" id="3_v1yy6"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/light.svg" id="4_hko3v"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/dark.svg" id="5_ktb8n"]
+[ext_resource type="PackedScene" path="res://scenes/entities/Zone.tscn" id="6_ji7al"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/checkpoint.svg" id="7_wloxu"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/switch.svg" id="8_t87n6"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/exit.svg" id="9_jjaxn"]
+
+[node name="LightDark" type="Node2D"]
+script = ExtResource("1_sdfdm")
+mission = "YOUR MISSION: Light opens gate 1. Dark opens gate 2. BOTH reach the exit. Replace the art and design better puzzles."
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Floor" parent="Platforms" instance=ExtResource("2_yoxu5")]
+position = Vector2(640, 620)
+size = Vector2(1240, 32)
+display_name = "floor"
+
+[node name="Gate1" parent="Platforms" instance=ExtResource("2_yoxu5")]
+position = Vector2(620, 470)
+size = Vector2(24, 270)
+display_name = "gate1"
+opens_when_flag = "light_gate"
+
+[node name="Gate2" parent="Platforms" instance=ExtResource("2_yoxu5")]
+position = Vector2(990, 470)
+size = Vector2(24, 270)
+display_name = "gate2"
+opens_when_flag = "dark_gate"
+
+[node name="LeftWall" parent="Platforms" instance=ExtResource("2_yoxu5")]
+position = Vector2(8, 440)
+size = Vector2(16, 360)
+display_name = "leftwall"
+
+[node name="RightWall" parent="Platforms" instance=ExtResource("2_yoxu5")]
+position = Vector2(1272, 440)
+size = Vector2(16, 360)
+display_name = "rightwall"
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Light" parent="Entities" instance=ExtResource("3_v1yy6")]
+position = Vector2(80, 560)
+affinity = 1
+display_name = "light"
+picture = ExtResource("4_hko3v")
+
+[node name="Dark" parent="Entities" instance=ExtResource("3_v1yy6")]
+position = Vector2(140, 560)
+controls = 1
+affinity = 2
+display_name = "dark"
+picture = ExtResource("5_ktb8n")
+
+[node name="Checkpoint" parent="Entities" instance=ExtResource("6_ji7al")]
+position = Vector2(230, 560)
+kind = 1
+display_name = "checkpoint"
+size = Vector2(40, 90)
+picture = ExtResource("7_wloxu")
+message = "Checkpoint reached."
+
+[node name="Checkpoint2" parent="Entities" instance=ExtResource("6_ji7al")]
+position = Vector2(670, 560)
+kind = 1
+display_name = "checkpoint2"
+size = Vector2(40, 90)
+picture = ExtResource("7_wloxu")
+message = "Checkpoint beyond gate 1."
+
+[node name="LightPool" parent="Entities" instance=ExtResource("6_ji7al")]
+position = Vector2(350, 590)
+affects = 2
+display_name = "hurts Dark"
+size = Vector2(110, 28)
+message = ""
+
+[node name="DarkPool" parent="Entities" instance=ExtResource("6_ji7al")]
+position = Vector2(760, 590)
+affects = 1
+display_name = "hurts Light"
+size = Vector2(110, 28)
+message = ""
+
+[node name="LightSwitch" parent="Entities" instance=ExtResource("6_ji7al")]
+position = Vector2(500, 578)
+kind = 3
+affects = 1
+display_name = "Light switch"
+size = Vector2(48, 52)
+picture = ExtResource("8_t87n6")
+message = "Light opened gate 1. Bring Dark along!"
+flag_id = "light_gate"
+
+[node name="DarkSwitch" parent="Entities" instance=ExtResource("6_ji7al")]
+position = Vector2(885, 578)
+kind = 3
+affects = 2
+display_name = "Dark switch"
+size = Vector2(48, 52)
+picture = ExtResource("8_t87n6")
+message = "Dark opened gate 2. Both players must reach the exit."
+flag_id = "dark_gate"
+
+[node name="Exit" parent="Entities" instance=ExtResource("6_ji7al")]
+position = Vector2(1155, 560)
+kind = 2
+display_name = "exit: BOTH players"
+size = Vector2(150, 90)
+picture = ExtResource("9_jjaxn")
+message = "Together you escaped! Now make your own cooperation puzzle."
+required_flags = PackedStringArray("light_gate", "dark_gate")

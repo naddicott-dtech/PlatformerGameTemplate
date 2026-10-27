@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scenes/entities/Platform.gd" id="1_xq8j5"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/platform.svg" id="2_wvcby"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e606g"]
+size = Vector2(160, 24)
+
+[node name="Platform" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_xq8j5")
+picture = ExtResource("2_wvcby")
+
+[node name="Picture" type="TextureRect" parent="."]
+mouse_filter = 2
+texture = ExtResource("2_wvcby")
+expand_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_e606g")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -80.0
+offset_top = -37.0
+offset_right = 220.0
+offset_bottom = -12.0
+theme_override_font_sizes/font_size = 18
+text = "platform"
